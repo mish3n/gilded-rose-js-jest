@@ -27,7 +27,7 @@ class Shop {
                 updateFn = this.updateRegularItemQuality;
             }
             
-            updateFn(this.items[i]);
+            updateFn(item);
             item.quality = Math.max(0, item.quality);
             item.quality = Math.min(50, item.quality);
         }
@@ -48,9 +48,8 @@ class Shop {
     }
 
     updateRegularItemQuality(item) {
-        --item.quality;
-
         --item.sellIn;
+        --item.quality;
 
         if (item.sellIn < 0) {
             --item.quality;
@@ -77,7 +76,6 @@ class Shop {
 
     updateAgedBrie(item) {
         ++item.quality;
-
         --item.sellIn;
 
         if (item.sellIn < 0) {
