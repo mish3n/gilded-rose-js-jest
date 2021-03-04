@@ -19,20 +19,24 @@ class Shop {
             } else if(this.items[i].name === "Backstage passes to a TAFKAL80ETC concert") {
                 this.updateBackstagePassQuality(i);
             } else if (this.items[i].name === "Conjured") {
-                --this.items[i].sellIn;
-                this.items[i].quality -= 2;
-
-                if(this.items[i].sellIn < 0) {
-                    this.items[i].quality -= 2;
-                }
-
-                this.items[i].quality = Math.max(0, this.items[i].quality);
+                this.updateConjuredQuality(i);
             } else {
                 this.updateRegularItemQuality(i);
             }
         }
 
         return this.items;
+    }
+
+    updateConjuredQuality(i) {
+        --this.items[i].sellIn;
+        this.items[i].quality -= 2;
+
+        if (this.items[i].sellIn < 0) {
+            this.items[i].quality -= 2;
+        }
+
+        this.items[i].quality = Math.max(0, this.items[i].quality);
     }
 
     updateRegularItemQuality(i) {
