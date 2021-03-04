@@ -20,18 +20,22 @@ class Shop {
         };
 
         for (let i = 0; i < this.items.length; i++) {
-            let updateFn = itemUpdateMap[this.items[i].name];
+            let item = this.items[i];
+
+            let updateFn = itemUpdateMap[item.name];
             if (!updateFn) {
                 updateFn = this.updateRegularItemQuality;
             }
             
             updateFn(this.items[i]);
+            item.quality = Math.max(0, item.quality);
+            item.quality = Math.min(50, item.quality);
         }
 
         return this.items;
     }
     
-    updateSulfurasQuality(item) {
+    updateSulfurasQuality() {
     }
 
     updateConjuredQuality(item) {
@@ -41,8 +45,6 @@ class Shop {
         if (item.sellIn < 0) {
             item.quality -= 2;
         }
-
-        item.quality = Math.max(0, item.quality);
     }
 
     updateRegularItemQuality(item) {
@@ -53,26 +55,19 @@ class Shop {
         --item.sellIn;
 
         if (item.sellIn < 0) {
-            if (item.quality > 0) {
-                --item.quality;
-            }
+            --item.quality;
         }
     }
 
     updateBackstagePassQuality(item) {
-        if (item.quality < 50) {
-            ++item.quality;
+        ++item.quality;
 
-            if (item.sellIn < 11) {
-                if (item.quality < 50) {
-                    ++item.quality;
-                }
-            }
-            if (item.sellIn < 6) {
-                if (item.quality < 50) {
-                    ++item.quality;
-                }
-            }
+        if (item.sellIn < 11) {
+            ++item.quality;
+        }
+        
+        if (item.sellIn < 6) {
+            ++item.quality;
         }
 
         --item.sellIn;
@@ -83,16 +78,12 @@ class Shop {
     }
 
     updateAgedBrie(item) {
-        if (item.quality < 50) {
-            ++item.quality;
-        }
+        ++item.quality;
 
         --item.sellIn;
 
         if (item.sellIn < 0) {
-            if (item.quality < 50) {
-                ++item.quality;
-            }
+            ++item.quality;
         }
     }
 }
