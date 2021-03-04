@@ -48,9 +48,7 @@ class Shop {
     }
 
     updateRegularItemQuality(item) {
-        if (item.quality > 0) {
-            --item.quality;
-        }
+        --item.quality;
 
         --item.sellIn;
 
