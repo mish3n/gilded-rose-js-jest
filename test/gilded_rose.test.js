@@ -15,6 +15,7 @@ describe("Gilded Rose", function() {
         ["Backstage passes to a TAFKAL80ETC concert", 1, 10, 0, 13],
         ["Backstage passes to a TAFKAL80ETC concert", 1, 48, 0, 50],
         ["Backstage passes to a TAFKAL80ETC concert", 0, 48, -1, 0],
+        ["Conjured", 1, 48, 0, 46],
     ])("%p (si: %p, q: %p) => (esi: %p, eq: %p)", function(name, sellIn, quality, expectedSellIn, expectedQuality) {
         const gildedRose = new Shop([new Item(name, sellIn, quality)]);
         const items = gildedRose.updateQuality();
