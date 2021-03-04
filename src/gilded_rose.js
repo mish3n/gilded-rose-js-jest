@@ -10,85 +10,88 @@ class Shop {
     constructor(items = []) {
         this.items = items;
     }
+
     updateQuality() {
+        const itemUpdateMap = {
+            "Sulfuras, Hand of Ragnaros": this.updateSulfurasQuality,
+            "Aged Brie": this.updateAgedBrie,
+            "Backstage passes to a TAFKAL80ETC concert": this.updateBackstagePassQuality,
+            "Conjured": this.updateConjuredQuality,
+        };
+
         for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].name === "Sulfuras, Hand of Ragnaros") {
-                this.updateSulfurasQuality(i);
-            } else if (this.items[i].name === "Aged Brie") {
-                this.updateAgedBrie(i);
-            } else if(this.items[i].name === "Backstage passes to a TAFKAL80ETC concert") {
-                this.updateBackstagePassQuality(i);
-            } else if (this.items[i].name === "Conjured") {
-                this.updateConjuredQuality(i);
-            } else {
-                this.updateRegularItemQuality(i);
+            let updateFn = itemUpdateMap[this.items[i].name];
+            if (!updateFn) {
+                updateFn = this.updateRegularItemQuality;
             }
+            
+            updateFn(this.items[i]);
         }
 
         return this.items;
     }
     
-    updateSulfurasQuality(i) {
+    updateSulfurasQuality(item) {
     }
 
-    updateConjuredQuality(i) {
-        --this.items[i].sellIn;
-        this.items[i].quality -= 2;
+    updateConjuredQuality(item) {
+        --item.sellIn;
+        item.quality -= 2;
 
-        if (this.items[i].sellIn < 0) {
-            this.items[i].quality -= 2;
+        if (item.sellIn < 0) {
+            item.quality -= 2;
         }
 
-        this.items[i].quality = Math.max(0, this.items[i].quality);
+        item.quality = Math.max(0, item.quality);
     }
 
-    updateRegularItemQuality(i) {
-        if (this.items[i].quality > 0) {
-            --this.items[i].quality;
+    updateRegularItemQuality(item) {
+        if (item.quality > 0) {
+            --item.quality;
         }
 
-        --this.items[i].sellIn;
+        --item.sellIn;
 
-        if (this.items[i].sellIn < 0) {
-            if (this.items[i].quality > 0) {
-                --this.items[i].quality;
+        if (item.sellIn < 0) {
+            if (item.quality > 0) {
+                --item.quality;
             }
         }
     }
 
-    updateBackstagePassQuality(i) {
-        if (this.items[i].quality < 50) {
-            ++this.items[i].quality;
+    updateBackstagePassQuality(item) {
+        if (item.quality < 50) {
+            ++item.quality;
 
-            if (this.items[i].sellIn < 11) {
-                if (this.items[i].quality < 50) {
-                    ++this.items[i].quality;
+            if (item.sellIn < 11) {
+                if (item.quality < 50) {
+                    ++item.quality;
                 }
             }
-            if (this.items[i].sellIn < 6) {
-                if (this.items[i].quality < 50) {
-                    ++this.items[i].quality;
+            if (item.sellIn < 6) {
+                if (item.quality < 50) {
+                    ++item.quality;
                 }
             }
         }
 
-        --this.items[i].sellIn;
+        --item.sellIn;
 
-        if (this.items[i].sellIn < 0) {
-            this.items[i].quality = 0;
+        if (item.sellIn < 0) {
+            item.quality = 0;
         }
     }
 
-    updateAgedBrie(i) {
-        if (this.items[i].quality < 50) {
-            ++this.items[i].quality;
+    updateAgedBrie(item) {
+        if (item.quality < 50) {
+            ++item.quality;
         }
 
-        --this.items[i].sellIn;
+        --item.sellIn;
 
-        if (this.items[i].sellIn < 0) {
-            if (this.items[i].quality < 50) {
-                ++this.items[i].quality;
+        if (item.sellIn < 0) {
+            if (item.quality < 50) {
+                ++item.quality;
             }
         }
     }
