@@ -22,6 +22,10 @@ class Shop {
                 --this.items[i].sellIn;
                 this.items[i].quality -= 2;
 
+                if(this.items[i].sellIn < 0) {
+                    this.items[i].quality -= 2;
+                }
+
                 this.items[i].quality = Math.max(0, this.items[i].quality);
             } else {
                 this.updateRegularItemQuality(i);
