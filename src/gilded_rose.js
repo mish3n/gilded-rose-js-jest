@@ -13,7 +13,7 @@ class Shop {
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].name === "Sulfuras, Hand of Ragnaros") {
-                
+                this.updateSulfurasQuality(i);
             } else if (this.items[i].name === "Aged Brie") {
                 this.updateAgedBrie(i);
             } else if(this.items[i].name === "Backstage passes to a TAFKAL80ETC concert") {
@@ -26,6 +26,9 @@ class Shop {
         }
 
         return this.items;
+    }
+    
+    updateSulfurasQuality(i) {
     }
 
     updateConjuredQuality(i) {
